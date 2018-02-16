@@ -6,13 +6,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import no.knowit.chapters.jvm.springbootdemo.client.WeatherClient;
+import org.mockito.Mockito;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 public class DemoControllerTest {
 
   private Clock fixedClock = Clock.fixed(LocalDateTime.of(2018, 2, 16, 14, 42).toInstant(UTC), UTC);
-  DemoController controller = new DemoController(fixedClock);
+  private WeatherClient client = Mockito.mock(WeatherClient.class);
+  DemoController controller = new DemoController(fixedClock, client);
   MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
   @org.junit.Test

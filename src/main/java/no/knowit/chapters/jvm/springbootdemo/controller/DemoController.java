@@ -2,6 +2,7 @@ package no.knowit.chapters.jvm.springbootdemo.controller;
 
 import java.time.Clock;
 import java.time.LocalTime;
+import no.knowit.chapters.jvm.springbootdemo.client.WeatherClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,9 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
   private final Clock clock;
+  private final WeatherClient client;
 
-  public DemoController(Clock clock) {
+  public DemoController(Clock clock, WeatherClient client) {
     this.clock = clock;
+    this.client = client;
+  }
+
+  @RequestMapping("/temperature")
+  public String temperature() {
+    return client.fetchXmlForecast();
   }
 
   @RequestMapping("/time")
