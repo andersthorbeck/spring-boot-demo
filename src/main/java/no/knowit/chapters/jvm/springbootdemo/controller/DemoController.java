@@ -18,8 +18,8 @@ public class DemoController {
   }
 
   @RequestMapping("/temperature")
-  public String temperature() {
-    return client.fetchXmlForecast();
+  public int temperature() {
+    return client.fetchForecastTemperature();
   }
 
   @RequestMapping("/time")
