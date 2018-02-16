@@ -3,6 +3,8 @@ package no.knowit.chapters.jvm.springbootdemo.client;
 import java.io.StringReader;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -10,6 +12,8 @@ import org.springframework.xml.xpath.Jaxp13XPathTemplate;
 
 @Component
 public class WeatherClient {
+
+  private static final Logger log = LoggerFactory.getLogger(WeatherClient.class);
 
   /** Værvarsel fra Yr, levert av NRK og Meteorologisk institutt. */
   private static final String FORECAST_ENDPOINT_URL =
@@ -34,6 +38,7 @@ public class WeatherClient {
 
   @Scheduled(initialDelay = 10 * ONE_SECOND_IN_MS, fixedRate = 10 * ONE_MINUTE_IN_MS)
   private void regularlyUpdateCachedForecast() {
+    log.info("Fetching updated weather forecast");
     forecastXml = fetchXmlForecast();
   }
 
